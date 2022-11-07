@@ -53,15 +53,7 @@ public class ClientThread extends Thread{
 
                 ac.println("OK");
                 System.out.println(dlg + "Signature is valid");
-
-            }else{
-
-                ac.println("ERROR");
-                System.out.println(dlg + "Signature is invalid");
-
-            }
-
-            //Step 6a: Generates G^y
+                //Step 6a: Generates G^y
 
             SecureRandom r = new SecureRandom();
 			int y = Math.abs(r.nextInt());
@@ -109,12 +101,11 @@ public class ClientThread extends Thread{
             ac.println(byte2str(rta_req));
             ac.println(byte2str(rta_mac));
             ac.println(str_iv1);
+            
             String response = dc.readLine();
             System.out.println(dlg + "Respuesta del servidor: " + response);
             //Step 10
-            if (response.compareTo("ERROR")==0) {                
-            }
-            else if (response.compareTo("OK")==0) {
+            if (response.compareTo("OK")==0) {
 
                 //Step 11
 
@@ -155,7 +146,16 @@ public class ClientThread extends Thread{
                     ac.println("ERROR");
 
                 }
-            }         
+            } 
+
+            }else{
+
+                ac.println("ERROR");
+                System.out.println(dlg + "Signature is invalid");
+
+            }
+
+                    
 
             
 
