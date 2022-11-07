@@ -73,7 +73,6 @@ public class ClientThread extends Thread{
 
     		BigInteger master_key = calculate_master_key(g2x,bix,p);
     		String str_key = master_key.toString();
-    		System.out.println(dlg + " llave maestra: " + str_key);
 
             // Generating symmetric key to cypher: K_AB1
 
@@ -191,7 +190,7 @@ public class ClientThread extends Thread{
         long start = System.nanoTime();
 		BigInteger result = base.modPow(exponente,modulo);
         long end = System.nanoTime();      
-	    System.out.println(id+" --- Elapsed Time for generating G2Y in nano seconds: "+ (end-start));   
+	    System.out.println("Cliente-"+id+": --- Elapsed Time for generating G2Y in nano seconds: "+ (end-start));   
         return result;
     }
 
