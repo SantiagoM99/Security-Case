@@ -44,9 +44,10 @@ public class ClientThread extends Thread{
             String msj = G+","+P+","+G2X;
 
             //Step 4.2: Check the signature
-            
+            long startSign = System.nanoTime();
             Boolean checker = f.checkSignature(publicaServidor, signature_bytes, msj);
-
+            long endSign = System.nanoTime();      
+            System.out.println("Client-"+ id +": --- Elapsed Time for checking signature in nano seconds: "+ (endSign-startSign));   
             // Step 5: Sends the result of the Test
 
             if (Boolean.TRUE.equals(checker)) {
@@ -93,8 +94,11 @@ public class ClientThread extends Thread{
             int n = rand.nextInt(100);
             String request_str = String.valueOf(n);
             byte[] request_bytes = request_str.getBytes();
-            byte[] rta_req = f.senc(request_bytes, sk_srv,ivSpec1, "Servidor");
+            byte[] rta_req = f.senc(request_bytes, sk_srv,ivSpec1, "Client-"+id+": ");
+            long startHmac = System.nanoTime();
 	        byte [] rta_mac = f.hmac(request_bytes, sk_mac);
+            long endHmac = System.nanoTime();      
+	        System.out.println("Client-"+ id +": --- Elapsed Time for generating HMAC in nano seconds: "+ (endHmac-startHmac));   
 
             //Step 8: Send cyphered request
 
@@ -155,10 +159,6 @@ public class ClientThread extends Thread{
 
             }
 
-                    
-
-            
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -188,7 +188,11 @@ public class ClientThread extends Thread{
 	}
 
     private BigInteger G2Y(BigInteger base, BigInteger exponente, BigInteger modulo) {
-		return base.modPow(exponente,modulo);
+        long start = System.nanoTime();
+		BigInteger result = base.modPow(exponente,modulo);
+        long end = System.nanoTime();      
+	    System.out.println(id+" --- Elapsed Time for generating G2Y in nano seconds: "+ (end-start));   
+        return result;
     }
 
     private BigInteger calculate_master_key(BigInteger base, BigInteger exponente, BigInteger modulo) {
